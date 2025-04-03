@@ -7,8 +7,8 @@ Looking for bachelor diploma, AnfanyLabs create this app in internship at Colleg
    * [Tailwindcss](https://tailwindcss.com) modern css framework,
    * [JavasCRIPT](https://javascript.com)
 
-#Installation
-	*Copy and paste above link on your terminal
+# Installation
+* Copy and paste above link on your terminal
 ```
 git clone https://github.com/AnfanyLabs/Examen-en-ligne.git
 ```
