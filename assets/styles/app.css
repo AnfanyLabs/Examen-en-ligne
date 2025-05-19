@@ -1,3 +1,7 @@
 body {
-    background-color: skyblue;
+    background: repeating-linear-gradient(-45deg,  #211c1c 0 2px, transparent 0 9px) repeat-y;
+}
+
+.custom_background{
+  background:   linear-gradient(to right, #ff8177 0%, #24024d 100%);
 }

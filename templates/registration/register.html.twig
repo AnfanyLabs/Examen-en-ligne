@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'enrégistrer{% endblock %}
+
+{% block body %}
+<form class="flex rounded-[30px] mx-auto p-5 flex-col items-center gap-5  bg-purple-600 w-[600px] my-4" method="POST" action="">
+    <h1 class=" mx-auto text-white text-center text-4xl font-bold font-['Quicksand'] tracking-widest">Formulaire d'inscription</h1>
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+    <div class="flex w-full gap-16">
+        <div class="flex  flex-col gap-2 w-full ">
+        {{ form_row(registrationForm.nom) }}
+        </div>
+        <div class="flex  flex-col gap-2 w-full ">
+        {{ form_row(registrationForm.prenom) }}
+        </div>
+    </div>
+    <div class="flex  flex-col gap-2 w-full ">
+        {{ form_row(registrationForm.email) }}
+    </div>
+    <div class="flex  flex-col gap-2 w-full ">
+        {{ form_row(registrationForm.password) }}
+    </div>
+    <div class="flex gap-2  items-center w-[505px] h-[38px] text-white text-[18px] ">
+        {{ form_row(registrationForm.roles, {label:false}) }}
+    </div>
+        <button class="w-[300px] h-[62px]  bg-gradient-to-r from-[#7a0bc0] to-[#fa58b6] rounded-[10px] shadow-[4px_4px_60px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2.5 inline-flex text-white  font-bold font-['Quicksand'] tracking-wide" type="submit">S'inscrire</button>
+        <span class="text-white text-[32px] font-medium font-['Quicksand'] tracking-tight">Avez-vous déjà un compte? 
+            <a href="{{ path('app_login')}}" class="text-[#fa58b6] cursor-pointer text-[32px] font-lg font-['Quicksand']  tracking-tight">Se connecter</a>
+        </span>
+    {{ form_end(registrationForm) }}
+</form>
+{% endblock %}
