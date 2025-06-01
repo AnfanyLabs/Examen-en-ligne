@@ -1,0 +1,57 @@
+{% extends 'authenticatebase.html.twig' %}
+
+{% block title %}DigitalExam~créer une nouvelle épreuve {% endblock %}
+
+{% block authenticatebody %}
+{% import 'macros/epreuve_macros.html.twig' as epreuveMacros %}
+<div class="container mx-auto px-2 py-10 bg-white rounded-lg shadow">
+    <div class="mb-4 flex w-full flex-col text-center">
+        <h1 class="title-font  pt-4 text-2xl uppercase font-medium sm:text-3xl">Créer une nouvelle épreuve</h1>
+    <div class="mx-4">
+    {{ form_start(form) }}
+        <div class="-m-2 my-4 flex flex-wrap">
+                <div class="w-1/2 p-3">
+                   <div class="relative">
+                             {{ epreuveMacros.render_field(form.nom) }}
+                    </div>
+               </div>
+               <div class="w-1/2 p-3">
+                   <div class="relative">
+                            {{ epreuveMacros.render_field(form.coefficient) }}
+                    </div>
+               </div>
+        </div>
+        <div class="w-full p-2">
+          <div class="relative">
+                {{ epreuveMacros.render_field(form.dateEpreuve)}}
+          </div>
+        </div>
+        <div class="w-full p-2">
+          <div class="relative">
+                {{ epreuveMacros.render_field(form.dureeEpreuve) }}
+          </div>
+        </div>
+        <div class="w-full p-2">
+          <div class="relative">
+                {{ epreuveMacros.render_field(form.discipline) }}
+          </div>
+        </div>
+        <div class="w-full p-2">
+          <div class="relative">
+                {{ epreuveMacros.render_field(form.classe) }}
+          </div>
+        </div>
+        <div class="w-full p-2">
+          <div class="relative">
+                {{ epreuveMacros.render_field(form.contexte) }}
+          </div>
+        </div>
+        <div class="w-full p-2">
+          <button class="mx-auto flex rounded border-0 bg-[#07244b] py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none">Créer l'épreuve</button>
+        </div>
+    {{ form_end(form) }}
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

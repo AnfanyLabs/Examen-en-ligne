@@ -3,9 +3,11 @@
 {% block title %}Se connecter{% endblock %}
 
 {% block body %}
-    <form method="post" class="flex rounded-[30px] mx-auto p-5 flex-col items-center gap-5 bg-purple-600 w-[500px] my-4 p-4">
+{% import 'macros/form_macros.html.twig' as formMacros %}
+
+    <form method="post" class="flex rounded-[30px] mx-auto p-5 flex-col items-center gap-5 bg-white text-black w-[500px] my-4 p-4">
         {% if error %}
-        <div class="bg-red-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105">
+        <div class="bg-red-500  text-black shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M8.257 3.099c.366-.446.976-.446 1.342 0l6 7.5a1 1 0 01-.671 1.601H3.07a1 1 0 01-.671-1.601l6-7.5zM10 13a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd" />
             </svg>
@@ -13,12 +15,12 @@
                 <p class="font-bold">Erreur de connexion</p>
                 <p class="text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
             </div>
-            <button class="text-white hover:text-gray-300 focus:outline-none">
+            <button class=" text-black hover:text-gray-300 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
-        </div>
+      </div>
         {% endif %}
 
         {% if app.user %}
@@ -26,18 +28,16 @@
             Vous êtes déjà connecter en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="cursor-pointer rounded-full border-2 py-2 px-6 border-white bg-white text-purple-900 hover:bg-purple-900 hover:text-white hover:shadow-lg transition duration-300 ease-in-out">Se déconnecter</a>
             </div>
         {% else %}
-            <h1 class=" mx-auto text-white text-center text-3xl font-bold font-['Quicksand'] tracking-widest">Formulaire de connexion</h1>
+            <h1 class=" mx-auto text-black text-center text-3xl font-bold font-['Quicksand'] tracking-widest">Formulaire de connexion</h1>
             <div class="flex  flex-col gap-2 w-full ">
-                <label for="email" class="w-full text-white text-[20px] font-medium font-['Quicksand'] tracking-wide">Email:</label>
-                <input type="email" value="{{ last_username }}" name="_username" id="username" class="w-full text-white  focus:border-[#fff] outline-none bg-lime-[#270082] outl0ine-[#000] py-3 px-8 text-xl rounded-[50px] border-[3px] border-[#FFF]" autocomplete="email" required autofocus>
+                <input type="email" value="{{ last_username }}" name="_username" id="username" class="w-full  text-black  focus:border-[#fff] outline-none bg-lime-[#270082] outl0ine-[#000] py-3 px-8 text-xl rounded-[50px] border-[3px] border-[#FFF]" autocomplete="email" placeholder="Entrer votre email" required autofocus>
             </div>
             <div class="flex  flex-col gap-2 w-full ">
-                <label for="password" class="w-full text-white text-[20px] font-medium font-['Quicksand'] tracking-wide">Mot de passe:</label>
-                <input type="password" name="_password"  class="w-full text-white  focus:border-[#fff] outline-none bg-lime-[#270082] outl0ine-[#000] py-3 px-8 text-xl rounded-[50px] border-[3px] border-[#FFF]" autocomplete="email" required autofocus>
+                <input type="password" name="_password"  class="w-full  text-black  focus:border-[#fff] outline-none bg-lime-[#270082] outl0ine-[#000] py-3 px-8 text-xl rounded-[50px] border-[3px] border-[#FFF]" autocomplete="email" placeholder="Entrer votre mot de passe" required autofocus>
             </div>
                 <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-            <button class="w-[300px] h-[62px]  bg-gradient-to-r from-[#7a0bc0] to-[#fa58b6] rounded-[10px] shadow-[4px_4px_60px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2.5 inline-flex text-white  font-bold font-['Quicksand'] tracking-wide" type="submit">Se connecter</button>
-            <span class="text-white text-[20px] font-medium font-['Quicksand'] tracking-tight">N'avez-vous déjà pas un compte? 
+            <button class="w-[300px] h-[62px]  bg-[#07244b] rounded-[10px] shadow-[4px_4px_60px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2.5 inline-flex text-white  font-bold font-['Quicksand'] tracking-wide" type="submit">Se connecter</button>
+            <span class="text-black text-[20px] font-medium font-['Quicksand'] tracking-tight">N'avez-vous déjà pas un compte? 
                 <a href="{{ path('app_register')}}" class="text-[#fa58b6] cursor-pointer text-[20px] font-lg font-['Quicksand']  tracking-tight">S'enrégistrer</a>
             </span>  
         {% endif %}

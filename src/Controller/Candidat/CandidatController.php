@@ -12,7 +12,7 @@ final class CandidatController extends AbstractController
     public function index(): Response
     {
         return $this->render('candidat/index.html.twig', [
-            'controller_name' => 'CandidatController',
+
         ]);
     }
 }

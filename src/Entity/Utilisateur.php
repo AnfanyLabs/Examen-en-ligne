@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -61,23 +61,22 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
 
-    #[ORM\Column]
-    private ?string $statut = null;
+    #[ORM\Column(type: 'boolean', options:['default'=>false])]
+    private ? bool $statut = false;
 
 
-    /**
-     * @var Collection<int, Copie>
-     */
-    #[ORM\OneToMany(targetEntity: Copie::class, mappedBy: 'idUtilisateur')]
-    private  ? Collection $copies;
+    
 
     #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
-    #[ORM\JoinColumn(name: 'classe_id', referencedColumnName: 'id', nullable: true)]
-    private ?Classe $classe = null;
+    #[ORM\JoinColumn(nullable: true)]
+    
+     private ?Classe $classe = null;
+
+    
 
     public function __construct()
     {
-        $this->copies = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -114,7 +113,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_CANDIDAT';
 
         return array_unique($roles);
     }
@@ -193,49 +192,23 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     public function isActive():bool{
-       return  $this->statut ==='actif';
+       return  $this->statut === true;
     }
 
 
-    /**
-     * @return Collection<int, Copie>
-     */
-    public function getCopies(): Collection
-    {
-        return $this->copies;
-    }
+   
 
-    public function addCopy(Copie $copy): static
-    {
-        if (!$this->copies->contains($copy)) {
-            $this->copies->add($copy);
-            $copy->setIdUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCopy(Copie $copy): static
-    {
-        if ($this->copies->removeElement($copy)) {
-            // set the owning side to null (unless already changed)
-            if ($copy->getIdUtilisateur() === $this) {
-                $copy->setIdUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getclasse(): ?Classe
+    public function getClasse(): ?Classe
     {
         return $this->classe;
     }
 
-    public function setClasse(?Classe $Classe): static
+    public function setClasse(?Classe $classe): static
     {
-        $this->classe = $Classe;
+        $this->classe = $classe;
 
         return $this;
     }
+
+   
 }

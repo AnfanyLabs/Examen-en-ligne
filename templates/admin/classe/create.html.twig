@@ -1,0 +1,15 @@
+{% extends 'authenticatebase.html.twig' %}
+
+{% block title %}Espace Administrateur {% endblock %}
+
+{% block authenticatebody %}
+ 
+<form method="post" class="flex rounded-[30px] mx-auto p-5 flex-col items-center gap-5 bg-white w-[500px] my-4 p-4">
+    {{ form_start(form) }}
+            
+            <h1 class=" mx-auto text-dark text-center text-3xl font-bold font-['Quicksand'] tracking-widest">Créer une nouvelle classe</h1>
+            {{ form_row(form.nom) }}
+            <button class="block px-4 py-2 text-sm text-xl dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" type="submit">Créer</button>
+    {{ form_end(form) }}
+</form>
+{% endblock %}

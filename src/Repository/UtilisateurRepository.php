@@ -33,6 +33,47 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->getEntityManager()->flush();
     }
 
+
+    /**
+     * @return Utilisateur[] in waiting
+     */
+
+    public function findUserNotAuthorized(): array
+    {
+          return $this->createQueryBuilder('u')
+              ->andWhere('u.statut = :statut')
+                ->setParameter('statut', false)
+               ->getQuery()
+               ->getResult();
+    }
+
+    /**
+     * @return Utilisateur[] authorized
+     */
+
+    public function findCandidatesAuthorized(): array
+    {
+          return $this->createQueryBuilder('u')
+              ->where('u.statut = :statut')
+              ->andWhere('u.roles LIKE  :role')
+                ->setParameter('statut', true)
+                ->setParameter('role', "%ROLE_CANDIDAT%")
+               ->getQuery()
+               ->getResult();
+    }
+
+    public function findEnseignantsAuthorized():array
+    {
+         return $this->createQueryBuilder('u')
+              ->where('u.statut = :statut')
+              ->andWhere('u.roles LIKE  :role')
+                ->setParameter('statut', true)
+                ->setParameter('role', "%ROLE_ENSEIGNANT%")
+               ->getQuery()
+               ->getResult();
+    }
+
+
     //    /**
     //     * @return Utilisateur[] Returns an array of Utilisateur objects
     //     */

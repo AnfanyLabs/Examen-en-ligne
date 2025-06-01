@@ -1,0 +1,107 @@
+{% extends 'authenticatebase.html.twig' %}
+
+{% block title %}Attente validation {% endblock %}
+
+{% block authenticatebody %}
+
+<div class="flex items-center justify-center text-center my-4 p-4 border-t-4 border-gray-300 bg-gray-50 dark:bg-gray-800 dark:border-gray-600" role="alert">
+  <div class="ms-3 text-2xl font-medium text-gray-800 dark:text-gray-300">
+    LISTE DES INSCRIPTIONS EN ATTENTE DE VALIDATION
+  </div>
+</div>
+    
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-base text-left rtl:text-right ">
+        <thead class="text-white uppercase border-b border-blue-400">
+            <tr>
+                <th scope="col" class="px-6 py-3 bg-purple-500">
+                    Identifiant
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-600">
+                    Nom 
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-500">
+                    Prénom
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-600">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-500">
+                    Classe 
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-600">
+                    Rôle
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-500">
+                    Statut
+                </th>
+                <th scope="col" class="px-6 py-3 bg-purple-600">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in userNotAuthorized %}
+            <tr class="bg-white border-b border-blue-400">
+                <th scope="row" class="px-6 py-4 border-r border-blue-400 font-medium  whitespace-nowrap ">
+                   {{ user.id }}
+                </th>
+                <td class="px-6 py-4 border-r border-blue-400">
+                    {{user.nom }}
+                </td>
+                <td class="px-6 py-4 border-r border-blue-400">
+                    {{user.prenom }}
+                </td>
+                <td class="px-6 py-4 border-r border-blue-400">
+                    {{user.email }}
+                </td>
+                <td class="px-6 py-4 border-r border-blue-400">
+                    {{ user.classe ? user.classe.nom : "Aucune classe"}}
+                </td>
+                <td class="px-6 py-4 border-r border-blue-400">
+                    {{ roleLabels[user.roles[0]] }}
+                </td>
+                <td class="px-6 py-4 border-r border-blue-400">
+                    {% if user.statut %}
+                    <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            Actif
+                    </span>
+                    {% else %}
+                    <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                            Inactif
+                    </span>
+                    {% endif %}
+                </td>
+                <td class="px-6 py-4 border-r border-blue-400 text-center">
+                    <a href="{{ path('admin_utilisateur_toggle_statut', { id: user.id }) }}" class="flex items-center space-x-4 group">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:underline">
+                        {{ user.statut ? "Désactiver" : " Activer" }}
+                    </span>
+                    <div class="relative w-10 h-5">
+                        <div class="absolute inset-0 bg-gray-300 dark:bg-gray-600 rounded-full transition peer-checked:bg-red-600"></div>
+                        <div class="absolute top-0.5 left-0.5 bg-white w-4 h-4 rounded-full shadow-md transition-transform duration-300 transform 
+                            {{ user.statut ? 'translate-x-5' : '' }}">
+                        </div>
+                    </div>
+                    </a>
+                    <div class="p-2">
+                        <button class="px-2 py-1 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">
+                        <a href="">
+                          Editer
+                        </a>
+                        </button>
+                        <button class="mt-2 px-2 py-1 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
+                       <a href="">
+                          Supprimer
+                        </a> 
+                        </button>
+                    </div>
+              </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -33,31 +33,38 @@ class Epreuve
     private ?int $coefficient = null;
 
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column()]
     #[Assert\NotBlank(message: "La date de l'épreuve est obligatoire.")]
-    #[Assert\Date(message: "La date doit être valide.")]
-    private ?\DateTime $dateEpreuve = null;
-
-    #[ORM\Column(type: 'time')]
-    #[Assert\NotBlank(message: "L'heure de début est obligatoire.")]
-    #[Assert\Time(message: "L'heure de début doit être valide.")]
-    private ?\DateTimeInterface $heureDebut = null;
-
-
+    private ?\DateTimeImmutable $dateEpreuve = null;
 
 
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank(message: "La durée est obligatoire.")]
     #[Assert\Positive(message: "La durée doit être exprimée en secondes et être positive.")]
-    private ?\DateTime $dureeEpreuve = null;
+    private ? int $dureeEpreuve = null;
 
     // Relation avec les questions (OneToMany)
-    #[ORM\OneToMany(mappedBy: 'epreuve', targetEntity: Question::class)]
-    private iterable $questions;
+    #[ORM\OneToMany(mappedBy: 'epreuve', targetEntity: Question::class, cascade:['persist'], orphanRemoval:true)]
+    #[Assert\Valid()]
+    private Collection $questions;
+
+    #[ORM\ManyToOne(inversedBy: 'epreuves')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Discipline $discipline = null;
+
+    #[ORM\ManyToOne(inversedBy: 'epreuves')]
+    private ?Classe $classe = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $contexte = null;
+
+    #[ORM\Column(type: 'boolean', options:['default'=>false])]
+    private ?bool $isPublished = null;
 
 
     public function __construct()
     {
+        $this->questions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,31 +101,20 @@ class Epreuve
         return $this->dateEpreuve;
     }
 
-    public function setDateEpreuve(\DateTime $date): static
+    public function setDateEpreuve(\DateTimeImmutable $date): static
     {
         $this->dateEpreuve = $date;
 
         return $this;
     }
 
-    public function getHeureDebut(): ?\DateTime
-    {
-        return $this->heureDebut;
-    }
 
-    public function setHeureDebut(\DateTime $heureDebut): static
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    public function getDuree(): ?\DateTime
+    public function getDureeEpreuve(): int
     {
         return $this->dureeEpreuve;
     }
 
-    public function setDuree(\DateTime $dureeEpreuve): static
+    public function setDureeEpreuve(int  $dureeEpreuve): static
     {
         $this->dureeEpreuve = $dureeEpreuve;
 
@@ -136,6 +132,54 @@ class Epreuve
             $this->questions[] = $question;
             $question->setEpreuve($this);
         }
+        return $this;
+    }
+
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): static
+    {
+        $this->discipline = $discipline;
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): static
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    public function getContexte(): ?string
+    {
+        return $this->contexte;
+    }
+
+    public function setContexte(?string $contexte): static
+    {
+        $this->contexte = $contexte;
+
+        return $this;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
+
         return $this;
     }
     

@@ -22,7 +22,7 @@ class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler
 
         // Redirection selon le rôle
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
-            return new RedirectResponse($this->router->generate('admin_dashboard'));
+            return new RedirectResponse($this->router->generate('admin_home'));
         }
 
         if (in_array('ROLE_CANDIDAT', $user->getRoles())) {

@@ -1,0 +1,67 @@
+{% extends 'authenticatebase.html.twig' %}
+
+{% block title %}DigitalExam~créer des questions{% endblock %}
+
+{% block authenticatebody %}
+ <main class="container">
+    <div class="flex items-center justify-center text-center my-4 p-4 border-t-4 border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600" role="alert">
+        <div class="ms-3 text-2xl font-medium text-gray-800 dark:text-gray-300">
+            Ajouter une (ou des) question(s) à l'épreuve
+        </div>
+    </div>
+    <div class="grid grid-cols md:grid-cols lg:grid-cols">
+        <div class="sm:first:col py-6 px-11  bg-white text-black rounded-lg w-auto">
+            <h4 class="mb-4 text-black text-[16px] uppercase text-center sm:text-[25px] font-extrabold leading-none">
+                <span>{{ epreuve.nom}} </span>
+            </h4>
+            <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                <span>Matière:{{ epreuve.discipline.nom}} </span>
+            </div>
+            <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                <span>Coefficient:0{{ epreuve.coefficient}} </span>
+            </div>
+            <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                <span>Durée:{{ epreuve.dureeEpreuve}} min</span>
+            </div>
+            <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                <span>Classe:{{ epreuve.classe.nom}} </span>
+            </div>
+            <div class="text-lg text-black  border-t border-black border-solid leading-[1.8]">
+            <p class="font-extrabold italic underline">Contexte d'évaluation:</p>  
+            <p>{{epreuve.contexte}}</p>
+            </div>
+            <div class="font-extrabold italic">
+            <p class="underline">Tâche: </p> Tu es invité(é) à relever les défis soulevés par la situation-contexte ci-dessus. Pour cela:  
+            </div>
+            <div class="w-full p-2">
+                <h1>Questions</h1>
+            <div class="flex flex-wrap">
+                {% for question in questions %}
+                <div class="w-full mt-1">
+                    <div class="bg-gray-100 mt-1 rounded flex p-4 h-full items-center">
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                            class="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4" viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                            <path d="M22 4L12 14.01l-3-3"></path>
+                        </svg>
+                        <span class="font-medium">
+                          {{ question.contenu}}  
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+            <h1 class="font-extrabold ml-4 mt-[50px] mb-0"> Ajouter une question</h1>
+            <div class="w-full">
+                {{ form_start(form) }}
+                    {{ form_row(form.contenu) }} 
+                    <button type="submit" class="px-6 mt-2 py-2 bg-[#07244b] text-white font-semibold rounded-md hover:bg-indigo-600 focus:outline-none">Soumettre la question</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

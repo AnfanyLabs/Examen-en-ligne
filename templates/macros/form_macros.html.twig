@@ -1,0 +1,12 @@
+{# templates/macros/epreuve_macros.html.twig #}
+{% macro render_field(field, labelClass, inputClass) %}
+    <div class="flex flex-col gap-1 w-full">
+        {{ form_label(field, null, {'label_attr': {'class': labelClass|default('text-white font-semibold')}}) }}
+        {{ form_widget(field, {
+            'attr': {
+                'class': (inputClass|default('w-full  text-black  focus:border-[#fff] outline-none bg-lime-[#270082] outl0ine-[#000] py-3 px-8 text-xl rounded-[50px]')) ~ ' ' ~ (field.vars.errors|length > 0 ? 'border-red-500' : '')
+            }
+        }) }}
+        {{ form_errors(field, {'attr': {'class': 'text-red-500 text-xs italic'}}) }}
+    </div>
+{% endmacro %}

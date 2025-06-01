@@ -1,0 +1,16 @@
+{% extends 'authenticatebase.html.twig' %}
+
+{% block title %}DigitalExam~créer une nouvelle discipline {% endblock %}
+
+{% block authenticatebody %}
+{% import 'macros/form_macros.html.twig' as formMacros %}
+ 
+<form method="post" class="flex rounded-[30px] mx-auto p-5 flex-col items-center gap-5 bg-white text-black w-[500px] my-4 p-4">
+    {{ form_start(form) }}
+            
+            <h1 class=" mx-auto text-dark text-center text-3xl font-bold font-['Quicksand'] tracking-widest">Créer une nouvelle discipline</h1>
+            {{ formMacros.render_field(form.nom) }}
+            <button class="w-[300px] h-[62px]  bg-[#07244b] rounded-[10px] shadow-[4px_4px_60px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2.5 inline-flex text-white  font-bold font-['Quicksand'] tracking-wide" type="submit">Créer une discipline</button>
+    {{ form_end(form) }}
+</form>
+{% endblock %}

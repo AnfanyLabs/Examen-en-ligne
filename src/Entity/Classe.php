@@ -14,30 +14,32 @@ class Classe
     #[ORM\Column]
     private ?int $id = null;
     
+    #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: "Le nom de la classe est obligatoire")]
     #[Assert\Length(
         max: 100,
         maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères."
     )]
-    private ?string $nom = null;
+    private ? string $nom = '';
 
 
     /**
      * @var Collection<int, Utilisateur>
      */
-    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'idClasse')]
+    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'id')]
     private Collection $utilisateurs;
 
+    
     /**
-     * @var Collection<int, Examen>
+     * @var Collection<int, Epreuve>
      */
-    #[ORM\OneToMany(targetEntity: Examen::class, mappedBy: 'idClasse')]
-    private Collection $examens;
+    #[ORM\OneToMany(targetEntity: Epreuve::class, mappedBy: 'classe')]
+    private Collection $epreuves;
 
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
-        $this->examens = new ArrayCollection();
+        $this->epreuves = new ArrayCollection();
     }
 
    
@@ -91,29 +93,29 @@ class Classe
     }
 
     /**
-     * @return Collection<int, Examen>
+     * @return Collection<int, Epreuve>
      */
-    public function getExamens(): Collection
+    public function getEpreuves(): Collection
     {
-        return $this->examens;
+        return $this->epreuves;
     }
 
-    public function addExamen(Examen $examen): static
+    public function addEpreufe(Epreuve $epreufe): static
     {
-        if (!$this->examens->contains($examen)) {
-            $this->examens->add($examen);
-            $examen->setClasse($this);
+        if (!$this->epreuves->contains($epreufe)) {
+            $this->epreuves->add($epreufe);
+            $epreufe->setClasse($this);
         }
 
         return $this;
     }
 
-    public function removeExamen(Examen $examen): static
+    public function removeEpreufe(Epreuve $epreufe): static
     {
-        if ($this->examens->removeElement($examen)) {
+        if ($this->epreuves->removeElement($epreufe)) {
             // set the owning side to null (unless already changed)
-            if ($examen->getClasse() === $this) {
-                $examen->setClasse(null);
+            if ($epreufe->getClasse() === $this) {
+                $epreufe->setClasse(null);
             }
         }
 
