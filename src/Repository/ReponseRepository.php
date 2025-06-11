@@ -16,20 +16,18 @@ class ReponseRepository extends ServiceEntityRepository
         parent::__construct($registry, Reponse::class);
     }
 
-    //    /**
-    //     * @return Reponse[] Returns an array of Reponse objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Reponse[] Returns an array of Reponse objects
+        */
+       public function findReponseByEpreuve($question): array
+       {
+           return $this->createQueryBuilder('r')
+               ->andWhere('r.question = :question')
+               ->setParameter('question', $question)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Reponse
     //    {

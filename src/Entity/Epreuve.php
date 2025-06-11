@@ -58,8 +58,14 @@ class Epreuve
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $contexte = null;
 
-    #[ORM\Column(type: 'boolean', options:['default'=>false])]
+    
+
+    #[ORM\Column(nullable: true)]
     private ?bool $isPublished = null;
+
+    #[ORM\ManyToOne(inversedBy: 'epreuves')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $utilisateur = null;
 
 
     public function __construct()
@@ -171,14 +177,29 @@ class Epreuve
         return $this;
     }
 
+    
+
+
     public function isPublished(): ?bool
     {
         return $this->isPublished;
     }
 
-    public function setIsPublished(bool $isPublished): static
+    public function setIsPublished(?bool $isPublished): static
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): static
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

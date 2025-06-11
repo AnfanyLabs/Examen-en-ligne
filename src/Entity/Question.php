@@ -27,6 +27,9 @@ class Question
     #[Assert\NotNull(message: "L'épreuve associée est obligatoire.")]
     private ?Epreuve $epreuve = null;
 
+    #[ORM\OneToOne(mappedBy: 'question', cascade: ['persist', 'remove'])]
+    private ?Reponse $reponse = null;
+
 
     // Getters & Setters
 
@@ -55,6 +58,23 @@ class Question
     public function setEpreuve(?Epreuve $epreuve): self
     {
         $this->epreuve = $epreuve;
+        return $this;
+    }
+
+    public function getReponse(): ?Reponse
+    {
+        return $this->reponse;
+    }
+
+    public function setReponse(Reponse $reponse): static
+    {
+        // set the owning side of the relation if necessary
+        if ($reponse->getQuestion() !== $this) {
+            $reponse->setQuestion($this);
+        }
+
+        $this->reponse = $reponse;
+
         return $this;
     }
 

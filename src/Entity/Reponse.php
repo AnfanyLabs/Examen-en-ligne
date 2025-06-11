@@ -20,6 +20,11 @@ class Reponse
     #[ORM\Column(nullable: true)]
     private ?float $point = null;
 
+    #[ORM\OneToOne(inversedBy: 'reponse', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Question $question = null;
+
+
     
     public function getId(): ?int
     {
@@ -49,6 +54,19 @@ class Reponse
 
         return $this;
     }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(Question $question): static
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
 
     
 }

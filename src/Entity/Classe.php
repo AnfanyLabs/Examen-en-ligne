@@ -26,7 +26,7 @@ class Classe
     /**
      * @var Collection<int, Utilisateur>
      */
-    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'id')]
+    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'classe')]
     private Collection $utilisateurs;
 
     

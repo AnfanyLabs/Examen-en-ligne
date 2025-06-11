@@ -73,7 +73,6 @@ class RegistrationForm extends AbstractType
             'choices'=>[
                 "Candidat.e"=> "ROLE_CANDIDAT",
                 "Enseignant.e"=>"ROLE_ENSEIGNANT",
-                "Administrateur-rice"=>"ROLE_ADMIN"
             ],
             'data' => "ROLE_CANDIDAT",
             'multiple'=>false,

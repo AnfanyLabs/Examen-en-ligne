@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Espace Candidat {% endblock %}
+{% block title %}
+         {% if is_granted('ROLE_ADMIN') %}
+               Espace Administrateur
+             {% elseif is_granted('ROLE_ENSEIGNANT') %}
+               Espace Enseignant
+              {% else %}
+              Espace candidat
+         {% endif %}
+ {% endblock %}
 
 {% block body %}
 
@@ -33,8 +41,14 @@
 
   <!-- Colonne 2 : titre centré -->
   <h1 class="justify-self-center z-40 text-center text-xl font-semibold sm:text-2xl whitespace-nowrap
-             text-gray-900 dark:text-white">
-    ESPACE DE CANDIDAT
+             text-gray-900 dark:text-white"> ESPACE 
+             {% if is_granted('ROLE_ADMIN') %}
+               ADMINISTRATEUR
+             {% elseif is_granted('ROLE_ENSEIGNANT') %}
+               ENSEIGNANT
+              {% else %}
+               CANDIDAT
+             {% endif %}
   </h1>
 
   <!-- Colonne 3 : menu utilisateur aligné à droite -->
@@ -55,9 +69,9 @@
          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100
                 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600">
       <div class="px-4 py-3">
-        <p class="text-sm text-gray-900 dark:text-white">Neil Sims</p>
+        <p class="text-sm text-gray-900 dark:text-white">{{app.user.nom}} {{app.user.prenom}}</p>
         <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
-          neil.sims@flowbite.com
+          {{app.user.email}}
         </p>
       </div>
       <ul class="py-1">
@@ -69,7 +83,7 @@
           </a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{path('app_logout')}}"
              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
                     dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
             Se déconnecter
@@ -81,11 +95,11 @@
 </header>
 
 
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-10 w-64 h-screen pt-30  transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-10 w-64 h-screen pt-50  transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
          <li>
-            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="{{path('admin_home')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                   <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
                </svg>
@@ -100,6 +114,16 @@
                <span class="flex-1 ms-3 whitespace-nowrap">Calendrier</span>
             </a>
          </li>
+         <li>
+            <a href="{{path('app_epreuve_candidat')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z" clip-rule="evenodd"/>
+               </svg>
+               <span class="flex-1 ms-3 whitespace-nowrap">Mes copies</span>
+            </a>
+         </li>
+  {% if is_granted('ROLE_ENSEIGNANT') %}
 <li>
   <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-epreuves" data-collapse-toggle="dropdown-epreuves">
     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -110,12 +134,14 @@
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1l4 4 4-4"/>
     </svg>
   </button>
+  {% endif %}
+  {% if is_granted('ROLE_ADMIN') %}
   <ul id="dropdown-epreuves" class="hidden py-2 space-y-2">
     <li>
       <a href="{{path('app_admin_discipline_list')}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
-</svg>
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+      </svg>
       <span class="flex-1 ms-3 whitespace-nowrap">Disciplines</span>
       </a>
     </li>
@@ -124,9 +150,22 @@
       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
   <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.008-3.018a1.502 1.502 0 0 1 2.522 1.159v.024a1.44 1.44 0 0 1-1.493 1.418 1 1 0 0 0-1.037.999V14a1 1 0 1 0 2 0v-.539a3.44 3.44 0 0 0 2.529-3.256 3.502 3.502 0 0 0-7-.255 1 1 0 0 0 2 .076c.014-.398.187-.774.48-1.044Zm.982 7.026a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2h-.01Z" clip-rule="evenodd"/>
 </svg>
-      <span class="flex-1 ms-3 whitespace-nowrap">Épreuves</span>
+      <span class="flex-1 ms-3 whitespace-nowrap">Toutes les épreuves</span>
       </a>
     </li>
+   {% endif %}
+   {% if is_granted('ROLE_ENSEIGNANT') %}
+      <li>
+         <a href="{{ path('app_admin_discipline_list_by_user',  {'id': app.user.id })}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+         </svg>
+         <span class="flex-1 ms-3 whitespace-nowrap">Mes épreuves</span>
+         </a>
+      </li>
+   {% endif %}
+   {% if is_granted('ROLE_ADMIN') %}
+      <li>
   </ul>
 </li>
 <li>
@@ -177,6 +216,8 @@
             </a>
          </li>
       </ul>
+    {% endif %}
+
       <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
          <li>
             <a href="#" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
@@ -187,7 +228,7 @@
             </a>
          </li>
          <li>
-            <a href="#" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+            <a href="{{ path('app_logout')}}" class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group mb-4">
                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
               </svg>

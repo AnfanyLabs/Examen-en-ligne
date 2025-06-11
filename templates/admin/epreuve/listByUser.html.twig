@@ -1,0 +1,66 @@
+{% extends 'authenticatebase.html.twig' %}
+
+{% block title %}DigitalExam~Liste des épreuves{% endblock %}
+
+{% block authenticatebody %}
+
+
+
+
+ <main class="container mx-auto px-6 py-0">
+        <a type="button" href="{{path('app_admin_create_epreuve')}}" class="px-6 py-3.5 mb-4 text-base font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg class="text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                Ajouter une nouvelle épreuve
+        </a>
+        <div class="flex items-center justify-center text-center my-4 p-4 border-t-4 border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600" role="alert">
+        <div class="ms-3 text-2xl font-medium text-gray-800 dark:text-gray-300">
+                LISTE DES EPREUVES
+        </div>
+        </div>
+{% if  epreuves|length > 0  %}
+                
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                        {% for epreuve in epreuves %}
+            <div class="sm:first:col-span-1 py-6 px-11 rounded-lg max-w-lg bg-white">
+                <h4 class="mb-4 text-black text-[16px] uppercase text-center sm:text-[25px] font-extrabold leading-none">
+                    <span>{{ epreuve.nom}} </span>
+                </h4>
+                <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                    <span>Matière:{{ epreuve.discipline.nom}} </span>
+                </div>
+                <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                    <span>Coefficient:0{{ epreuve.coefficient}} </span>
+                </div>
+                <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                    <span>Durée:{{ epreuve.dureeEpreuve}} min</span>
+                </div>
+                <div class="mb-4 text-black text-[16px]  text-center sm:text-[15px] font-extrabold leading-none">
+                    <span>Classe:{{ epreuve.classe.nom}} </span>
+                </div>
+                <div class="text-lg text-black  border-t border-black border-solid leading-[1.8]">
+                <p class="font-extrabold italic underline">Contexte d'évaluation:</p>  
+                <p>{{epreuve.contexte}}</p>
+                </div>
+                <div class="font-extrabold italic">
+                <p class="underline">Tâche: </p> Tu es invité(é) à relever les défis soulevés par la situation-contexte ci-dessus. Pour cela:  
+                </div>
+                <div class="mt-2">
+                    <a href="{{path('app_admin_epreuve_question', {'id': epreuve.id })}}"
+                        class="flex flex-row items-center text-white justify-center w-full px-4 py-4 mb-4 text-sm font-bold bg-[#07244b] leading-6  duration-100 transform rounded-sm shadow cursor-pointer focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none sm:mb-0 sm:w-auto sm:mr-4 md:pl-8 md:pr-6 xl:pl-12 xl:pr-10   hover:shadow-lg hover:-translate-y-1">
+                        Ajouter des questions à l'épreuve
+                    </a>    
+                </div>
+            </div>
+            {% endfor %}
+                    </div>
+    {% else %}
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg">
+            <p class="text-lg font-semibold">Aucune épreuve disponible</p>
+            <p>Vous n'avez encore créé aucune épreuve</p>
+        </div>
+
+    {% endif %}
+    </main>
+{% endblock %}

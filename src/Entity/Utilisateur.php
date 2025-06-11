@@ -38,7 +38,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\Length(
         min: 5,
-        minMessage:"Le mot de passe doit dépasser {{limit}} caractères."
+        minMessage:"Le mot de passe doit dépasser 5 caractères."
     )]
     private ?string $password = null;
 
@@ -46,8 +46,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min:3,
         max: 100,
-        minMessage:"Le nom doit dépasser {{ limit }} caractères.",
-        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères."
+        minMessage:"Le nom doit dépasser 3 caractères.",
+        maxMessage: "Le nom ne peut pas dépasser 100 caractères."
     )]
     private ?string $nom = null;
 
@@ -55,8 +55,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min:3,
         max: 100,
-        minMessage:"Le prénom doit dépasser {{ limit }} caractères.",
-        maxMessage: "Le prénom ne peut pas dépasser {{ limit }} caractères."
+        minMessage:"Le prénom doit dépasser 3 caractères.",
+        maxMessage: "Le prénom ne peut pas dépasser 100 caractères."
     )]
     private ?string $prenom = null;
 
@@ -72,11 +72,25 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     
      private ?Classe $classe = null;
 
+
+    /**
+     * @var Collection<int, Epreuve>
+     */
+    #[ORM\OneToMany(targetEntity: Epreuve::class, mappedBy: 'utilisateur')]
+    private Collection $epreuves;
+
+    /**
+     * @var Collection<int, Reponse>
+     */
+    #[ORM\OneToMany(targetEntity: Reponse::class, mappedBy: 'utilisateur')]
+    private Collection $reponses;
+
     
 
     public function __construct()
     {
-        
+        $this->epreuves = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +223,48 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    
+
+    /**
+     * @return Collection<int, Epreuve>
+     */
+    public function getEpreuves(): Collection
+    {
+        return $this->epreuves;
+    }
+
+    public function addEpreufe(Epreuve $epreufe): static
+    {
+        if (!$this->epreuves->contains($epreufe)) {
+            $this->epreuves->add($epreufe);
+            $epreufe->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEpreufe(Epreuve $epreufe): static
+    {
+        if ($this->epreuves->removeElement($epreufe)) {
+            // set the owning side to null (unless already changed)
+            if ($epreufe->getUtilisateur() === $this) {
+                $epreufe->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reponse>
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    
 
    
 }
