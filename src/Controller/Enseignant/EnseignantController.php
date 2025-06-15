@@ -4,7 +4,7 @@ namespace App\Controller\Enseignant;
 
 use App\Entity\Epreuve;
 use App\Entity\Reponse;
-use App\Form\CopieCorrectionTypeForm;
+use App\Form\CopieCorrectionType;
 use App\Form\ReponseTypeForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,5 +20,4 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class EnseignantController extends AbstractController
 {
     
-
 }
